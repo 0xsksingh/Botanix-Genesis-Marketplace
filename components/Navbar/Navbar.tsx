@@ -37,12 +37,12 @@ export function Navbar() {
             <ConnectWallet theme="dark" btnTitle={"Enter Botanix-Genesis-Marketplace"} 
             welcomeScreen={{
               img: {
-                src: "https://pbs.twimg.com/profile_images/1668751547285504002/Fn4GgdKT_400x400.jpg",
-                width: 150,
-                height: 150,
+                src: "/genesis-marketplace.png",
+                width: 350,
+                height: 300,
               },
               title:
-                "Your Entry to the world of Botanix",
+                "Your Entry to the world of BitcoinL2 with Botanix",
               subtitle: "Connect Wallet to enter 🎉",
             }}
             />
@@ -51,9 +51,9 @@ export function Navbar() {
             <Link className={styles.link} href={`/profile/${address}`}>
               <Image
                 className={styles.profileImage}
-                src="/user-icon.png"
+                src="/spider.png"
                 width={42}
-                height={42}
+                height={62}
                 alt="Profile"
               />
             </Link>

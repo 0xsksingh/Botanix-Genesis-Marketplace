@@ -31,7 +31,7 @@ const Home: NextPage = () => {
               className={styles.heroAsset}
             />
             <Image
-              src="/spiderman.png"
+              src="/genesis-marketplace.png"
               width={600}
               height={500}
               alt="Prince"
@@ -39,7 +39,7 @@ const Home: NextPage = () => {
               className={styles.gradient}
             />
             <Image
-              src="/botanixspider.png"
+              src="/spiderman.png"
               width={450}
               height={540}
               alt="Background gradient from red to blue"
