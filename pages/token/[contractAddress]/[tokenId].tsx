@@ -154,7 +154,7 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
                 )}
               </div>
 
-              <h3 className={styles.descriptionTitle}>History of the Property</h3>
+              <h3 className={styles.descriptionTitle}>Past Sales of the NFT</h3>
 
               <div className={styles.traitsContainer}>
                 {transferEvents?.map((event, index) => (

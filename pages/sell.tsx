@@ -22,7 +22,7 @@ export default function Sell() {
 
   return (
     <Container maxWidth="lg">
-      <h1>Sell NFTs</h1>
+      <h1>Sell your Botanix NFTs</h1>
       {!selectedNft ? (
         <>
           <p>Select which NFT you&rsquo;d like to sell below.</p>
