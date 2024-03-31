@@ -6,7 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../util/toastConfig";
 
 export default function Component() {
-  const { contract } = useContract("");
+  const { contract } = useContract("0x3854AECCFacb32A828632276ed2744CEC48CEE26");
   const { mutate: mintNft, isLoading, error } = useMintNFT(contract);
 
   const [name, setName] = useState("");
