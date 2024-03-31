@@ -56,7 +56,7 @@ const Home: NextPage = () => {
                 <br />
               </h1>
               <h2>
-                Trade Unique Premium NFT Collections on Botanix&aptos;s First NFT
+                Trade Unique Premium NFT Collections on Botanix&apos;s First ever NFT
                 Marketplace 🌐
               </h2>
               <br />
@@ -65,9 +65,7 @@ const Home: NextPage = () => {
         </div>
         <div className="text-center mx-56">
           <p className={styles.heroSubtitle}>
-            Seamlessly trade, collect, and explore unique NFTs while having
-            access to comprehensive transaction history. Immerse yourself in the
-            future of areons and unlock the true potential of digital ownership.
+            Seamlessly trade, collect, and explore unique NFTs Unlock the potential of your idle Bitcoin by engaging with the Genesis NFT Marketplace
           </p>
           <div className={styles.heroCtaContainer}>
             <Link className={styles.heroCta} href="/buy">

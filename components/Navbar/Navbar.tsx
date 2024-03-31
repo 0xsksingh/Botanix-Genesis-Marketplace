@@ -34,7 +34,7 @@ export function Navbar() {
 
         <div className={styles.navRight}>
           <div className={styles.navConnect}>
-            <ConnectWallet theme="dark" btnTitle={"Enter BotanixNFTHub"} 
+            <ConnectWallet theme="dark" btnTitle={"Enter Botanix-Genesis-Marketplace"} 
             welcomeScreen={{
               img: {
                 src: "https://pbs.twimg.com/profile_images/1668751547285504002/Fn4GgdKT_400x400.jpg",
