@@ -13,6 +13,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@fleekxyz/sdk": "^0.7.3",
     "@mui/material": "^5.13.6",
     "@thirdweb-dev/chains": "^0.1.65",
     "@thirdweb-dev/react": "^4.4.0",
