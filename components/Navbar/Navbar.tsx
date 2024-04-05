@@ -29,6 +29,9 @@ export function Navbar() {
             <Link href="/rent" className={styles.link}>
               Rent
             </Link>
+            <Link href="/mint" className={styles.link}>
+              Mint
+            </Link>
           </div>
         </div>
 

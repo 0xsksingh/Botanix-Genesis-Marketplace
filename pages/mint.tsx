@@ -1,48 +1,74 @@
 import React, { useState } from "react";
-import { useAddress, useContract, useMintNFT } from "@thirdweb-dev/react";
 import Container from "../components/Container/Container";
-import { Box } from "@mui/material";
+import { Box, Button, TextField, IconButton } from "@mui/material";
 import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../util/toastConfig";
+import fleek from '@fleekhq/fleek-storage-js';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { useAddress, useContract, useMintNFT } from "@thirdweb-dev/react";
+
+interface Attribute {
+  trait_type: string;
+  value: string;
+}
 
 export default function Component() {
   const { contract } = useContract("0x3854AECCFacb32A828632276ed2744CEC48CEE26");
-  const { mutate: mintNft, isLoading, error } = useMintNFT(contract);
-
+  const { mutate: mintNft, isLoading } = useMintNFT(contract);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
-  const [gameTitle, setGameTitle] = useState("");
-  const [genre, setGenre] = useState("");
-  const [platform, setPlatform] = useState("");
-  const [rarity, setRarity] = useState("");
-  const [level, setLevel] = useState("");
-  const [experiencePoints, setExperiencePoints] = useState("");
-  
-
+  const [attributes, setAttributes] = useState<Attribute[]>([]);
   const address = useAddress();
 
-  if (error) {
-    console.error("failed to mint NFT", error);
-  }
+  const handleAddAttribute = () => {
+    setAttributes([...attributes, { trait_type: "", value: "" }]);
+  };
+
+  const handleRemoveAttribute = (index: number) => {
+    const newAttributes = [...attributes];
+    newAttributes.splice(index, 1);
+    setAttributes(newAttributes);
+  };
+
+  const handleAttributeChange = (index: number, key: keyof Attribute, value: string) => {
+    const newAttributes = [...attributes];
+    newAttributes[index][key] = value;
+    setAttributes(newAttributes);
+  };
+
+  const uploadimage = async (metadata: any) => {
+    const input = {
+      apiKey: process.env.NEXT_PUBLIC_STORAGE_API_KEY!,
+      apiSecret: process.env.NEXT_PUBLIC_STORAGE_SECRET!,
+      key: `mintingnfts/usinggfleek`,
+      data: metadata.image,
+    };
+
+    const result = await fleek.upload(input);
+    console.log(result, "fleek uploaded nft");
+
+    return result;
+  };
 
   const handleMint = () => {
     const metadata = {
       name,
       description,
       image,
-      attributes: [
-        { trait_type: "Game Title", value: gameTitle },
-        { trait_type: "Genre", value: genre },
-        { trait_type: "Platform", value: platform },
-        { trait_type: "Rarity", value: rarity },
-        { trait_type: "Level", value: level },
-        { trait_type: "Experience Points", value: experiencePoints },
-      ],
+      attributes,
+    };
+
+    const fleekimage= uploadimage(metadata);
+
+    const updatedmetadata = {
+      ...metadata,
+      image: fleekimage
     };
 
     mintNft({
-      metadata,
+      updatedmetadata,
       // @ts-ignore
       to: address,
     });
@@ -59,8 +85,9 @@ export default function Component() {
     <Container maxWidth="lg">
       <Toaster position="bottom-center" reverseOrder={false} />
       <h1>Tokenize your Botanix Asset as an NFT</h1>
-      <form className="space-y-4 my-4">
-        <div className="mb-4">
+      <form className="space-y-4 my-4 text-white">
+        <Box>
+          <div className="mb-4">
           <label className="block mb-2">
             Name:
             <input
@@ -93,79 +120,36 @@ export default function Component() {
             />
           </label>
         </div>
-        <div className="mb-4">
-          <label className="block mb-2">
-            Game Title:
-            <input
-              type="text"
-              value={gameTitle}
-              onChange={(e) => setGameTitle(e.target.value)}
-              className="w-full border border-gray-400 rounded px-2 py-1"
+        </Box>
+        {attributes.map((attribute, index) => (
+          <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <TextField
+              label="Trait Type"
+              variant="outlined"
+              value={attribute.trait_type}
+              color="success"
+              onChange={(e) => handleAttributeChange(index, 'trait_type', e.target.value)}
             />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">
-            Genre:
-            <input
-              type="text"
-              value={genre}
-              onChange={(e) => setGenre(e.target.value)}
-              className="w-full border border-gray-400 rounded px-2 py-1"
+            <TextField
+              label="Value"
+              variant="outlined"
+              value={attribute.value}
+              onChange={(e) => handleAttributeChange(index, 'value', e.target.value)}
             />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">
-            Platform:
-            <input
-              type="text"
-              value={platform}
-              onChange={(e) => setPlatform(e.target.value)}
-              className="w-full border border-gray-400 rounded px-2 py-1"
-            />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">
-            Rarity:
-            <input
-              type="text"
-              value={rarity}
-              onChange={(e) => setRarity(e.target.value)}
-              className="w-full border border-gray-400 rounded px-2 py-1"
-            />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">
-            Level:
-            <input
-              type="text"
-              value={level}
-              onChange={(e) => setLevel(e.target.value)}
-              className="w-full border border-gray-400 rounded px-2 py-1"
-            />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">
-            Experience Points:
-            <input
-              type="text"
-              value={experiencePoints}
-              onChange={(e) => setExperiencePoints(e.target.value)}
-              className="w-full border border-gray-400 rounded px-2 py-1"
-            />
-          </label>
-        </div>
-
-      </form>
-      <div className="flex justify-center">
+            <IconButton onClick={() => handleRemoveAttribute(index)} color="error">
+              <RemoveCircleOutlineIcon />
+            </IconButton>
+          </Box>
+        ))}
+        <Button startIcon={<AddCircleOutlineIcon />} onClick={handleAddAttribute}>
+          Add Attribute
+        </Button>
+        <div className="flex justify-center">
         <button disabled={isLoading} onClick={handleMint} className="text-center border-4 border-sky-500 p-2">
           Mint!
         </button>
       </div>
+      </form>
     </Container>
   );
 }
