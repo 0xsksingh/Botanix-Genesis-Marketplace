@@ -52,7 +52,8 @@ export default function Component() {
     return result;
   };
 
-  const handleMint = () => {
+  const handleMint = (e: any) => {
+    e.preventDefault();
     const metadata = {
       name,
       description,
@@ -129,12 +130,18 @@ export default function Component() {
               value={attribute.trait_type}
               color="success"
               onChange={(e) => handleAttributeChange(index, 'trait_type', e.target.value)}
+              InputProps={{
+                style: { color: 'white' },
+              }}
             />
             <TextField
               label="Value"
               variant="outlined"
               value={attribute.value}
               onChange={(e) => handleAttributeChange(index, 'value', e.target.value)}
+              InputProps={{
+                style: { color: 'white' },
+              }}
             />
             <IconButton onClick={() => handleRemoveAttribute(index)} color="error">
               <RemoveCircleOutlineIcon />
@@ -145,8 +152,8 @@ export default function Component() {
           Add Attribute
         </Button>
         <div className="flex justify-center">
-        <button disabled={isLoading} onClick={handleMint} className="text-center border-4 border-sky-500 p-2">
-          Mint!
+        <button disabled={isLoading} onClick={(e) => handleMint(e)} className="text-center border-4 border-sky-500 p-2">
+          Mint 🚀
         </button>
       </div>
       </form>
